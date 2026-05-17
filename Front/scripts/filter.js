@@ -54,7 +54,7 @@ async function uniteFilters(filters, wrapper) {
         all_items = new Set([...all_items].filter(x => fitting.has(x)));
         j++;
     }
-    let i = 0;
+    console.log(all_items);
     wrapper.innerHTML = "";
     all_items.forEach((item) => {
         wrapper.appendChild(create_element(item));
@@ -67,30 +67,37 @@ async function filter() {
         method: "GET",
         headers: {"Content-Type": "application/json"},
     })
-    let filters = new Array();
     let db_filters = await data.json();
-    for (const current_filter_db of db_filters) {
-        let current_filter = new Filter(current_filter_db.content, current_filter_db.attribute);
-        filters.push(current_filter);
+    let filters_map = new Map();
+    for (const db_filter of db_filters) {
+        let filter = new Filter(db_filter.content, db_filter.attribute);
+        filters_map.set(String(db_filter.id), filter);
     }
-    console.log(filters);
-    let i = 0;
     let all_filters = new Array();
-    raw_filters.forEach(current_filter_document => {
-        const filter_input = current_filter_document.querySelector(".filter-item");
-        let current_filter = filters[i];
-        console.log(current_filter);
-        filter_input.addEventListener("change", () => {
+    document.addEventListener("click", async (e) => {
+        if (e.target.classList.contains("filter-item")) {
+            let filter_input = e.target;
+            let current_filter_id = "";
+            let i = 0;
+            let flag = false;
+            while (i < filter_input.id.length) {
+                if (filter_input.id[i] === '-') {
+                    flag = true;
+                }
+                if (flag && filter_input.id[i] !== '-' ) {
+                    current_filter_id += filter_input.id[i];
+                }
+                i++;
+            }
+            let current_filter = filters_map.get(current_filter_id);
             if (filter_input.checked && !all_filters.includes(current_filter)) {
                 all_filters.push(current_filter);
             } else if (!filter_input.checked) {
                 all_filters = all_filters.filter(item => item !== current_filter);
             }
             console.log(all_filters);
-            uniteFilters(all_filters, wrapper);
-        });
-        i++;
-        i %= filters.length;
+            await uniteFilters(all_filters, wrapper);
+        }
     });
     let price_down = document.getElementById("by-price-up");
     let price_up = document.getElementById("by-price-down");

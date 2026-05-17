@@ -3,7 +3,6 @@ const fs = require('fs');
 const path = require('path');
 const multer = require('multer');
 const cors = require('cors');
-
 const app = express();
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "../Front")));
@@ -191,5 +190,95 @@ app.get("/get_filter", (req, res) => {
         res.json(row);
     })
 });
+
+const mongoose = require("mongoose");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const User = require("./mongodb_models/User");
+const readline = require("node:readline");
+
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+})
+rl.question("U + P ?", (answer) => {
+    mongoose.connect("mongodb+srv://LiquidSubstance:"+ answer +"@cluster0.e8c5egx.mongodb.net/?appName=Cluster0")
+        .then(() => {
+            console.log("Connected");
+        })
+        .catch(err => console.log(err));
+})
+
+app.post("/signup", async (req, res) => {
+    const {login, password} = req.body;
+
+    const candidate = await User.findOne({login});
+    if (candidate) {
+        return res.status(400).json({
+            message: "Пользователь уже существует, попробуйте другой логин."
+        })
+    }
+
+    const password_hash = await bcrypt.hash(password, 533);
+
+    const user = new User({
+        login,
+        password: password_hash,
+        is_admin: false
+    });
+
+    await user.save();
+
+    res.status(200).json({
+        message: "Ок"
+    })
+})
+
+app.post("/login", async (req, res) => {
+    const {login, password} = req.body;
+
+    const user = await User.findOne({ login });
+
+    if (!user) {
+        return res.status(400).json({
+            message: "Пользователь с таким логином не найден."
+        });
+    }
+
+    const ans = await bcrypt.compare(
+        password,
+        user.password,
+    );
+
+    if (!ans) {
+        return res.status(400).json({
+            message: "Неверный пароль."
+        });
+    }
+
+    const token = jwt.sign(
+        {
+            id: user._id,
+        },
+        "SECRET_KEY",
+        {
+            expiresIn: "24h"
+        }
+    );
+
+    res.status(200).json({
+        token,
+        message: "Успешный вход.",
+        user: {
+            id: user._id,
+            login: user.login,
+            is_admin: user.is_admin,
+            cart: []
+        }
+
+    });
+
+})
+
 
 app.listen(3000);
