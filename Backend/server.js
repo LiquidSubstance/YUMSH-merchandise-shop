@@ -272,13 +272,43 @@ app.post("/login", async (req, res) => {
         user: {
             id: user._id,
             login: user.login,
+            cart: []
+        }
+    });
+})
+
+app.get("/get_user", async (req, res) => {
+    const {login} = req.query;
+    const user = await User.findOne({login});
+    if (!user) {
+        console.log("Пользователь с таким логином не найден.")
+        return res.status(400).json({
+            message: "Пользователь с таким логином не найден."
+        })
+
+    }
+    res.status(200).json({
+        user: {
+            id: user._id,
+            login: user.login,
             is_admin: user.is_admin,
             cart: []
         }
-
     });
-
 })
 
+app.post("/make_admin", async (req, res) => {
+    const {login} = req.body;
+    const user = await User.findOne({login});
+    if (!user) {
+        return res.status(400).json({
+            message: "Пользователь с таким логином не найден."
+        })
+    }
+    user.is_admin = true;
+    return res.status(200).json({
+        message: "Пользователь " + login + " назначен администратором"
+    });
+})
 
 app.listen(3000);

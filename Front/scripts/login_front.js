@@ -66,5 +66,15 @@ async function signup() {
         headers: {"Content-Type": "application/json"}
     })
     const res = await ans.json();
+
     console.log(res);
+
+    if (ans.ok) {
+        localStorage.setItem("user", JSON.stringify(res.user));
+        localStorage.setItem("token", res.token);
+        login_window.style.display = "none";
+        await update_page(res.user);
+    } else {
+        window.alert(res.message)
+    }
 }

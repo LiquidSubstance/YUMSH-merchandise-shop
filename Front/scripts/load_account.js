@@ -7,8 +7,12 @@ async function update_page(user) {
     account_link.style.display = "block";
     account_link.textContent = user.login;
     account_link.href = "account_page.html";
-    console.log(user.is_admin)
-    if (user.is_admin) {
+    const ans = fetch("/get_user?login=" + user.login, {
+        method: "GET",
+        headers: {"Content-Type": "application/json"},
+    });
+    const res = await ans;
+    if (JSON.stringify(res.user.is_admin)) {
         const add_item_wrapper = document.querySelector(".add-item-wrapper")
         const add_item_page_wrapper = document.querySelector(".add-item-page-wrapper")
         add_item_wrapper.style.display = "block";
