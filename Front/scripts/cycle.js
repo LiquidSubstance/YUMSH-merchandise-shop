@@ -7,6 +7,7 @@ window.addEventListener('load', () => {
         "../contents/background_images/background2.png",
         "../contents/background_images/background3.png",
         "../contents/background_images/background4.png",
+        "../contents/background_images/serenityv2.png"
     ];
     let n = image_list.length;
     image_list.forEach(src => {
