@@ -224,13 +224,29 @@ app.post("/signup", async (req, res) => {
     const user = new User({
         login,
         password: password_hash,
-        is_admin: false
+        is_admin: false,
+        cart: new Map()
     });
 
     await user.save();
 
+    const token = jwt.sign(
+        {
+            id: user._id,
+        },
+        "SECRET_KEY",
+        {
+            expiresIn: "24h"
+        }
+    );
+
     res.status(200).json({
-        message: "Ок"
+        message: "Ок",
+        token,
+        user: {
+            id: user._id,
+            login: user.login,
+        }
     })
 })
 
@@ -272,7 +288,6 @@ app.post("/login", async (req, res) => {
         user: {
             id: user._id,
             login: user.login,
-            cart: []
         }
     });
 })
@@ -287,13 +302,15 @@ app.get("/get_user", async (req, res) => {
         })
 
     }
+    console.log(user);
     res.status(200).json({
         user: {
             id: user._id,
             login: user.login,
             is_admin: user.is_admin,
-            cart: []
-        }
+            cart: user.cart
+        },
+        message: "Пользователь получен"
     });
 })
 
@@ -311,4 +328,45 @@ app.post("/make_admin", async (req, res) => {
     });
 })
 
+app.post("/add_to_cart", async (req, res) => {
+    const {login, id} = req.body;
+    const user = await User.findOne({login});
+    if (!user) {
+        return res.status(400).json({
+            message: "Пользователь с таким логином не найден."
+        })
+    }
+    if (user.cart.has(id)) {
+        user.cart[id] += 1;
+    } else {
+        user.cart.set(id, 1);
+    }
+    console.log(user.cart);
+    return res.status(200).json({
+        message: "Товар с id " + id + " добавлен в корзину"
+    });
+})
+app.post("/delete_from_cart", async (req, res) => {
+    const {login, id} = req.body;
+    const user = await User.findOne({login});
+    if (!user) {
+        return res.status(400).json({
+            message: "Пользователь с таким логином не найден."
+        })
+    }
+    if (user.cart.has(id)) {
+        if (user.cart[id] == 1) {
+            user.cart.delete(id);
+        } else {
+            user.cart[id] -= 1;
+        }
+    } else {
+        return res.status(400).json({
+            message: "Товара с id " + id + " нет в корзине"
+        })
+    }
+    return res.status(200).json({
+        message: "Товар с id " + id + " удален из корзины"
+    });
+})
 app.listen(3000);

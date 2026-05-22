@@ -7,11 +7,13 @@ async function update_page(user) {
     account_link.style.display = "block";
     account_link.textContent = user.login;
     account_link.href = "account_page.html";
-    const ans = fetch("/get_user?login=" + user.login, {
+    console.log(user);
+    const ans = await fetch("/get_user?login=" + user.login, {
         method: "GET",
         headers: {"Content-Type": "application/json"},
     });
-    const res = await ans;
+    const res = await ans.json();
+    console.log(res);
     if (JSON.stringify(res.user.is_admin)) {
         const add_item_wrapper = document.querySelector(".add-item-wrapper")
         const add_item_page_wrapper = document.querySelector(".add-item-page-wrapper")
