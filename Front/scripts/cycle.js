@@ -1,6 +1,6 @@
 window.addEventListener('load', () => {
-    const header = document.querySelector('.header');
-    let frame = 1;
+    const bg1 = document.querySelector('.background-image-1');
+    const bg2 = document.querySelector('.background-image-2');
     let i = 0;
     let image_list = [
         "../contents/background_images/background1.png",
@@ -9,14 +9,19 @@ window.addEventListener('load', () => {
         "../contents/background_images/background4.png",
         "../contents/background_images/serenityv2.png"
     ];
-    let n = image_list.length;
     image_list.forEach(src => {
         const img = new Image();
         img.src = src;
     });
-    console.log(image_list);
+    let curr = 0;
+    bg1.style.backgroundImage = "url(" + image_list[curr] + ")";
+    let active = bg1;
+    let hidden = bg2;
     setInterval(() => {
-        header.style.backgroundImage = "linear-gradient(90deg, rgba(255,255,255, 0.2), rgba(255,255,255,0)), url(" + image_list[i] + ")";
-        i = (i + 1) % n;
+        curr = (curr + 1) % image_list.length;
+        hidden.style.backgroundImage = "url(" + image_list[curr] + ")";
+        hidden.style.opacity = 1;
+        active.style.opacity = 0;
+        [active, hidden] = [hidden, active];
     }, 3000);
 })
