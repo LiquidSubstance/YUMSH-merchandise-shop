@@ -1,4 +1,3 @@
-wrapper = document.querySelector(".catalogue");
 function create_element(item) {
     let element = document.createElement("div");
     element.className = "catalogue-item";
@@ -17,6 +16,8 @@ async function load() {
         method: "GET",
         headers: {"Content-Type": "application/json"},
     })
+    const wrapper = document.querySelector(".catalogue");
+    wrapper.innerHTML = "";
     console.log(items_res);
     let all_catalogue_items = Array.from(await items_res.json());
     all_catalogue_items.forEach((item) => {

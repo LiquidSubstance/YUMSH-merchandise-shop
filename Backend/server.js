@@ -323,6 +323,7 @@ app.post("/make_admin", async (req, res) => {
         })
     }
     user.is_admin = true;
+    await user.save();
     return res.status(200).json({
         message: "Пользователь " + login + " назначен администратором"
     });
@@ -337,10 +338,11 @@ app.post("/add_to_cart", async (req, res) => {
         })
     }
     if (user.cart.has(id)) {
-        user.cart[id] += 1;
+        user.cart.set(id, user.cart.get(id) + 1);
     } else {
         user.cart.set(id, 1);
     }
+    await user.save();
     console.log(user.cart);
     return res.status(200).json({
         message: "Товар с id " + id + " добавлен в корзину"
@@ -355,18 +357,53 @@ app.post("/delete_from_cart", async (req, res) => {
         })
     }
     if (user.cart.has(id)) {
-        if (user.cart[id] == 1) {
+        if (user.cart.get(id) === 1) {
             user.cart.delete(id);
         } else {
-            user.cart[id] -= 1;
+            user.cart.set(id, user.cart.get(id) - 1);
         }
     } else {
         return res.status(400).json({
             message: "Товара с id " + id + " нет в корзине"
         })
     }
+    await user.save();
     return res.status(200).json({
         message: "Товар с id " + id + " удален из корзины"
     });
+})
+app.post("/remove_from_cart", async (req, res) => {
+    const {login, id} = req.body;
+    const user = await User.findOne({login});
+    if (!user) {
+        return res.status(400).json({
+            message: "Пользователь с таким логином не найден."
+        })
+    }
+    if (user.cart.has(id)) {
+        user.cart.delete(id);
+    } else {
+        return res.status(400).json({
+            message: "Товара с id " + id + " нет в корзине"
+        })
+    }
+    await user.save();
+    return res.status(200).json({
+        message: "Товар с id " + id + " удален из корзины"
+    });
+})
+app.post("/order", async (req, res) => {
+    const {login} = req.body;
+    const user = await User.findOne({login});
+    if (!user) {
+        return res.status(400).json({
+            message: "Пользователь с таким логином не найден."
+        })
+    }
+    user.cart = new Map();
+    await user.save();
+    return res.status(200).json({
+        message: "Корзина очищена"
+    })
 })
 app.listen(3000);

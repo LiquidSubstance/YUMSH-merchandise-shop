@@ -1,4 +1,3 @@
-const filter_wrapper = document.querySelector(".not-price");
 function create_filter(filter) {
     let element = document.createElement("div");
     element.className = "filter-item-wrapper";
@@ -16,6 +15,7 @@ async function load_filters() {
         headers: {"Content-Type": "application/json"},
     })
     console.log(filters_res);
+    const filter_wrapper = document.querySelector(".not-price");
     filter_wrapper.innerHTML = "";
     let all_filter_items = Array.from(await filters_res.json());
     all_filter_items.sort((a, b) => a.attribute.localeCompare(b.attribute));

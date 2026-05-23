@@ -66,7 +66,7 @@ button:hover {
     width: 20%;
     display: flex;
     text-align: center;
-    aspect-ratio: 3/4;
+    aspect-ratio: 17/20;
 }
 .main-image {
     width: 100%;
