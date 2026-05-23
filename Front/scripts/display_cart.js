@@ -84,7 +84,7 @@ document.addEventListener("click", async (e) => {
         })
         await load_cart();
     }
-    if (e.target.classList.contains("remove-button")) {
+    if (e.target.classList.contains("full-remove-button")) {
         let id = "";
         let i = 0;
         let flag = false;

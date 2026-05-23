@@ -4,6 +4,7 @@
 .header {
     background:linear-gradient(90deg, rgba(255,255,255, 0.2), rgba(255,255,255,0)), url("../contents/renderallv2.png");
     text-align: center;
+    padding-bottom: 200px;
 }
 .logo {
     filter: invert(100%);

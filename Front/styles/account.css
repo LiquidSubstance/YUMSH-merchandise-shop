@@ -34,7 +34,6 @@
     display: block;
 }
 button {
-    display: flex;
     margin-right: 20px;
     font-size: 14px;
     text-align: center;
@@ -86,7 +85,6 @@ a {
     border: 1px solid black;
     position: sticky;
     z-index: 10000;
-
 }
 .hide-header-button:hover {
     background-color: rgba(200,200,200,1);
@@ -124,5 +122,5 @@ a {
     margin-right: 20px;
 }
 .order-button {
-
+    font-size: 20px;
 }
