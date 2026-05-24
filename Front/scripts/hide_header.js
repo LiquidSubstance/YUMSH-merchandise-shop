@@ -9,7 +9,7 @@ function hide_header() {
         login_wrapper.style.display = "none";
     } else {
         hide_button.textContent = "^";
-        header.style.display = "block";
+        header.style.display = "flex";
         login_wrapper.style.display = "block";
     }
 }

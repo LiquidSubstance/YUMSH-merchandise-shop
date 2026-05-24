@@ -5,8 +5,10 @@ function create_element(item) {
     element.innerHTML = `
             <a href = "template.html?id=` + item.id + `">
                 <img src="` + item.image_path + `" width="192" height="256" alt = "` + item.name + `">
-                <h2>`+ item.name +`</h2>
-                <p> `+ item.price +`₽ </p>
+                <div class = "item-content">
+                    <h2>`+ item.name +`</h2>
+                    <p class="price-tag"> `+ item.price +`₽ </p>
+                </div>
             </a>
         `
     return element;
