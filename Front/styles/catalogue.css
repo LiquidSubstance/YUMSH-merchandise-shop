@@ -80,9 +80,12 @@ button:hover{
 }
 .catalogue {
     display: grid;
-    grid-template-columns:repeat(auto-fit, minmax(200px, 1fr));
-    gap: 30px;
+    grid-template-columns:repeat(auto-fit, minmax(230px, 1fr));
+    gap: 50px;
     padding: 40px;
+}
+.sort-form {
+    background: transparent;
 }
 .item-content {
     padding: 20px;
@@ -340,7 +343,7 @@ a {
     cursor: pointer;
 }
 .side-menu {
-    background-color: transparent;
+    background-color: rgba(255,255,255,0.21);
     backdrop-filter: blur(10px);
     position: fixed;
     left: 0;
