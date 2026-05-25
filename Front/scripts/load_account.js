@@ -14,7 +14,8 @@ async function update_page(user) {
     });
     const res = await ans.json();
     console.log(res);
-    if (JSON.stringify(res.user.is_admin)) {
+    console.log(JSON.stringify(res.user.is_admin));
+    if (JSON.stringify(res.user.is_admin) === "true") {
         const add_item_wrapper = document.querySelector(".add-item-wrapper")
         const add_item_page_wrapper = document.querySelector(".add-item-page-wrapper")
         add_item_wrapper.style.display = "block";

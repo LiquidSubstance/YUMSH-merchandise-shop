@@ -12,7 +12,7 @@ async function update_item_page(user) {
         headers: {"Content-Type": "application/json"},
     });
     const res = await ans.json();
-    if (JSON.stringify(res.user.is_admin)) {
+    if (JSON.stringify(res.user.is_admin) === "true") {
         const open_const = document.querySelector(".open-attribute-constructor");
         const delete_button = document.querySelector(".delete-item-button");
         open_const.style.display = "block";

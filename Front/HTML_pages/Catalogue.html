@@ -86,31 +86,35 @@
                 <button class = "upload-button" onclick="upload_filter()">Загрузить</button>
             </div>
         </div>
-        <hr>
-        <div class = "filter">
-            <p> Фильтры </p>
-            <div class="filter-items">
-                <div class="not-price">
+        <div class = "side-menu">
+            <div class = "side-menu-content">
+                <div class = "filter">
+                    <p> Фильтры </p>
+                    <div class="filter-items">
+                        <div class="not-price">
+                        </div>
+                        <div class="price">
+                            <p>По цене:</p>
+                            <label for = "by-price-up"> Не более </label>
+                            <input type = "text" id = "by-price-up" class = "filter-item-price" data-property = "price" data-content = "">
+                            <label for = "by-price-down"> Не менее </label>
+                            <input type = "text" id = "by-price-down" class = "filter-item-price" data-property = "price" data-content = "">
+                        </div>
+                    </div>
+                    <hr>
                 </div>
-                <div class="price">
-                    <p>По цене:</p>
-                    <label for = "by-price-up"> Не более </label>
-                    <input type = "text" id = "by-price-up" class = "filter-item-price" data-property = "price" data-content = "">
-                    <label for = "by-price-down"> Не менее </label>
-                    <input type = "text" id = "by-price-down" class = "filter-item-price" data-property = "price" data-content = "">
+                <div class="function-bar">
+                    <p>Сортировать по</p>
+                    <select class = "sort-form" >
+                        <option value="price-desc">Сначала дорогие</option>
+                        <option value="price-asc">Сначала дешевые</option>
+                        <option value="date-desc">Сначала новые</option>
+                        <option value="date-asc">Сначала старые</option>
+                        <option value="type">По типу</option>
+                    </select>
                 </div>
             </div>
-            <hr>
-        </div>
-        <div class="function-bar">
-            <p>Сортировать по</p>
-            <select class = "sort-form" >
-                <option value="price-desc">Сначала дорогие</option>
-                <option value="price-asc">Сначала дешевые</option>
-                <option value="date-desc">Сначала новые</option>
-                <option value="date-asc">Сначала старые</option>
-                <option value="type">По типу</option>
-            </select>
+            <button class = "hide-menu" onclick = "hide_menu()">></button>
         </div>
     </div>
     <hr>
@@ -177,6 +181,7 @@
     <footer>
         <h3> Юношеская Математическая Школа, 2025</h3>
     </footer>
+    <script src = "../scripts/hide_menu.js"></script>
     <script src="../scripts/login_front.js"></script>
     <script src="../scripts/display_filters.js"></script>
     <script src="../scripts/sort.js"></script>

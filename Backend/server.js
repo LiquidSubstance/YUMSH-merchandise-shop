@@ -229,7 +229,7 @@ app.post("/signup", async (req, res) => {
     });
 
     await user.save();
-
+    console.log(user);
     const token = jwt.sign(
         {
             id: user._id,
