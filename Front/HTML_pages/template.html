@@ -38,39 +38,9 @@
             <button class = "add-to-cart-button" onclick="add_to_cart()">Добавить в корзину</button>
         </div>
     </div>
-    <div class="item-editor">
-        <button class = "delete-item-button" onclick="delete_item()">Удалить товар</button>
-        <hr>
-    </div>
-    <button class = "open-attribute-constructor">Изменить товар</button>
-    <div class = "attribute-constructor-wrapper">
-        <div class = "attribute-constructor">
-            <button class = "close-attribute-constructor">x</button>
-            <p>Добавить другой аттрибут</p>
-            <label for = "attribute-property">Введите название аттрибута</label>
-            <input type = "text" id="attribute-property">
-            <label for = "attribute-content">Введите содержимое аттрибута</label>
-            <input type = "text" id="attribute-content">
-            <button id = "upload-button" onclick="upload_attribute()">Загрузить</button>
-            <hr>
-            <p>Удалить аттрибут у этого товара</p>
-            <label for = "delete-attribute">Введите название аттрибута</label>
-            <input type = "text" id="delete-attribute">
-            <button id = "delete-button" onclick="delete_attribute()">Удалить</button>
-            <hr>
-            <p>Изменить аттрибут у этого товара</p>
-            <label for = "update-attribute">Введите название аттрибута</label>
-            <input type = "text" id="update-attribute">
-            <label for = "new-content-form">Введите новое содержимое</label>
-            <input type = "text" id="new-content-form">
-            <button id = "update-button" onclick="update_attribute()">Изменить</button>
-        </div>
-    </div>
     <footer>
         <h3> Юношеская Математическая Школа, 2025</h3>
     </footer>
-    <script src="../scripts/edit_item.js"></script>
-    <script src="../scripts/attribute_constructor.js"></script>
     <script src="../scripts/update_template.js"></script>
     <script src="../scripts/load_account_on_item_page.js"></script>
     <script src="../scripts/hide_header.js"></script>

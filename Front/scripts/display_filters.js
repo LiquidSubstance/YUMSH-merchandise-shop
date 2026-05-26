@@ -5,7 +5,6 @@ function create_filter(filter) {
     element.innerHTML = `
             <input class = "filter-item" type = "checkbox" id = "filter-` + filter.id + `">
             <label for = "filter-` + filter.id + `"> `+ filter.name + ` </label>
-            <button class = "delete-filter-button" id = "delete-filter-`+ filter.id +`">Удалить этот фильтр</button>
         `
     return element;
 }

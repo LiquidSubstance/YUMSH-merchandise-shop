@@ -61,31 +61,6 @@
             </div>
         </div>
     </div>
-    <div class="function-bar-wrapper">
-        <button class = "open-button" onclick="open()">Добавить новый фильтр</button>
-        <div class="filter-constructor-wrapper">
-            <div class="constructor-content">
-                <button class = "close-button" onclick="close()">x</button>
-                <h2>Добавить новый фильтр</h2>
-                <p>
-                    Выберите имя фильтра
-                    <input type = "text" aria-label="Выберите имя фильтра" id="select-name" class = "constructor-input">
-                </p>
-                <p>
-                    Выберите признак сравнения
-                    <input type = "text" aria-label="Выберите признак сравнения" id="select-attribute" class = "constructor-input">
-                </p>
-                <p>
-                    Выберите содержимое признака сравнения
-                    <input type = "text" aria-label="Выберите содержимое признака сравнения" id="select-content" class = "constructor-input">
-                </p>
-                <div class = "preview-filter-item-wrapper">
-                    <input class = "preview-filter-item" type = "checkbox" id = "preview-filter-item">
-                    <label id = "preview-filter-item-label" for = "preview-filter-item"></label>
-                </div>
-                <button class = "upload-button" onclick="upload_filter()">Загрузить</button>
-            </div>
-        </div>
         <div class = "side-menu">
             <div class = "side-menu-content">
                 <div class = "filter">
@@ -121,63 +96,6 @@
     <div class="catalogue">
 
     </div>
-    <hr>
-    <div class = "add-item-wrapper">
-        <div class = "add-item">
-            <div class = "attributes-wrapper">
-                <p class = "add-item-header"> Загрузить новый товар </p>
-                <p>
-                    Загрузите изображение
-                    <input type = "file" accept="image/*" id = "file-upload-image">
-                </p>
-                <p>
-                    Введите название товара
-                    <input type = "text" aria-label="Введите название товара" id = "file-upload-name">
-                </p>
-                <p>
-                    Укажите цену
-                    <input type = "text" aria-label="Укажите цену" id = "file-upload-price">
-                </p>
-                <p>
-                    Установите дату
-                    <input type = "text" aria-label="Укажите цену" id = "file-upload-date">
-                </p>
-                <p>
-                    Укажите тип
-                    <input type = "text" aria-label="Укажите цену" id = "file-upload-type">
-                </p>
-            </div>
-            <div class="page-constructor-wrapper">
-                <div class = "page-constructor">
-                    <textarea class = "page-constructor-text" id = "page-constructor-text">Введите описание товара</textarea>
-                    <label for = "page-constructor-text"></label>
-                </div>
-            </div>
-            <hr>
-            <button id = "add-item-button" onclick="upload_item()"> Загрузить </button>
-        </div>
-        <div class="preview-item" id = "preview" data-name = "" data-price = "" data-type = "" data-date = "">
-            <a class = "preview-link">
-                <img id = "preview-image">
-                <h2 id = "preview-name"></h2>
-                <p id = "preview-price"></p>
-            </a>
-        </div>
-    </div>
-    <div class = "add-item-page-wrapper">
-        <div class="item-page">
-            <div class="image-wrapper">
-                <img src = "../contents/Placeholder.png" alt="placeholder" class = "main-image">
-            </div>
-            <div class="item-page-content">
-                <h2 class = "item-name">Template name</h2>
-                <p class = "item-price">Template price</p>
-                <p class = "item-description">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</p>
-                <button class = "add-to-cart-button">Добавить в корзину</button>
-            </div>
-        </div>
-        <hr>
-    </div>
     <footer>
         <h3> Юношеская Математическая Школа, 2025</h3>
     </footer>
@@ -185,10 +103,7 @@
     <script src="../scripts/login_front.js"></script>
     <script src="../scripts/display_filters.js"></script>
     <script src="../scripts/sort.js"></script>
-    <script src="../scripts/upload.js"></script>
-    <script src = "../scripts/delete_filters.js"></script>
     <script src="../scripts/filter.js"></script>
-    <script src="../scripts/filter_constructor.js"></script>
     <script src="../scripts/display_catalogue.js"></script>
     <script src="../scripts/hide_header.js"></script>
     <script src="../scripts/load_account.js"></script>
