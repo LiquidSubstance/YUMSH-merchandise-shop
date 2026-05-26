@@ -8,7 +8,9 @@ async function create_cart_element(id, quantity, cnt) {
     let cart_item = document.createElement("div");
     cart_item.className = "cart-item";
     cart_item.innerHTML = `
-        <img alt = "`+ data.name +`" src="`+ data.image_path +`">
+        <a href="template.html?id=`+String(id)+`">
+            <img alt = "`+ data.name +`" src="`+ data.image_path +`">
+        </a>
         <p>`+ data.name +`</p>
         <p>` + data.price + `</p>
         <p>x` + quantity + `</p>

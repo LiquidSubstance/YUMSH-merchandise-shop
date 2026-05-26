@@ -4,7 +4,7 @@ class Filter {
         this.content = content;
         this.property = property;
     }
-    applyFilter(items) {
+    apply_filter(items) {
         let fitting = new Set();
         items.forEach(item => {
             let prop = this.property;
@@ -14,7 +14,7 @@ class Filter {
         });
         return fitting;
     };
-    applyPriceFilter(items) {
+    apply_price_filter(items) {
         let fitting = new Set();
         if (this.property === "price") {
             items.forEach(item => {
@@ -28,7 +28,7 @@ class Filter {
     }
 }
 
-async function uniteFilters(filters, wrapper) {
+async function unite_filters(filters, wrapper) {
     const items_res = await fetch("/get_items", {
         method: "GET",
         headers: {"Content-Type": "application/json"},
@@ -41,15 +41,15 @@ async function uniteFilters(filters, wrapper) {
     let j = 0;
     while (j < filters.length) {
         if (filters[j].property === "price") {
-            let fitting = filters[j].applyPriceFilter(items);
+            let fitting = filters[j].apply_price_filter(items);
             all_items = new Set([...all_items].filter(x => fitting.has(x)));
             j++;
             continue;
         }
-        let fitting = filters[j].applyFilter(items);
+        let fitting = filters[j].apply_filter(items);
         while (j < filters.length - 1 && filters[j].property === filters[j + 1].property) {
             j++;
-            fitting = new Set([...filters[j].applyFilter(items), ...fitting]);
+            fitting = new Set([...filters[j].apply_filter(items), ...fitting]);
         }
         all_items = new Set([...all_items].filter(x => fitting.has(x)));
         j++;
@@ -62,7 +62,6 @@ async function uniteFilters(filters, wrapper) {
 }
 async function filter() {
     await load_filters();
-    let raw_filters = Array.from(document.querySelectorAll(".filter-item-wrapper"))
     const data = await fetch("/get_filters", {
         method: "GET",
         headers: {"Content-Type": "application/json"},
@@ -96,7 +95,7 @@ async function filter() {
                 all_filters = all_filters.filter(item => item !== current_filter);
             }
             console.log(all_filters);
-            await uniteFilters(all_filters, wrapper);
+            await unite_filters(all_filters, wrapper);
         }
     });
     let price_down = document.getElementById("by-price-up");
@@ -114,7 +113,7 @@ async function filter() {
             price_filter.content[1] = -1;
         }
         all_filters.push(price_filter);
-        uniteFilters(all_filters, wrapper);
+        unite_filters(all_filters, wrapper);
     })
 }
 filter();

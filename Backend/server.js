@@ -2,11 +2,9 @@ const express = require('express')
 const fs = require('fs');
 const path = require('path');
 const multer = require('multer');
-const cors = require('cors');
 const app = express();
 app.use(express.json());
 app.use(express.static(path.join(__dirname, "../Front")));
-app.use(cors());
 const upload = multer({ dest: '../Front/contents/' });
 app.post("/upload_item_image", upload.single("file"), (req, res) => {
     const {name} = req.body;
@@ -141,8 +139,6 @@ app.post("/add_filter", (req, res) => {
         INSERT INTO filters (attribute, name, content) 
         VALUES (?, ?, ?)
     `;
-    console.log(req.body);
-    console.log(database);
     database.run(sql, [attribute, name, content],  function (err) {
         console.log(database);
         if (err) {
@@ -152,13 +148,6 @@ app.post("/add_filter", (req, res) => {
         res.json({
             id: this.lastID
         });
-    });
-    database.all("SELECT * FROM filters", (err, rows) => {
-        if (err) {
-            console.error(err);
-            return res.status(500).json({ error: err.message });
-        }
-        console.log(rows);
     });
 });
 app.delete("/delete_filter", (req, res) => {
