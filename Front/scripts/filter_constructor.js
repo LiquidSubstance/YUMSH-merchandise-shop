@@ -18,6 +18,7 @@ form_filter_name.addEventListener("change", () => {
     preview_filter_name.textContent = form_filter_name.value;
 });
 async function upload_filter() {
+    await get_user();
     const form_attribute_filter = document.getElementById("select-attribute");
     const form_name_filter = document.getElementById("select-name");
     const form_content_filter = document.getElementById("select-content");

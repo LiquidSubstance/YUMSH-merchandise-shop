@@ -1,4 +1,5 @@
 async function update_item_page(user) {
+    await get_user();
     const login_button = document.getElementById("open-login");
     const signup_button = document.getElementById("open-signup");
     const account_link = document.getElementById("account-link");

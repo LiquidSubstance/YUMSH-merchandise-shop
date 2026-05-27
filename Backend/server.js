@@ -185,6 +185,7 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const User = require("./mongodb_models/User");
 const readline = require("node:readline");
+const middleware = require("/middleware")
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -222,6 +223,8 @@ app.post("/signup", async (req, res) => {
     const token = jwt.sign(
         {
             id: user._id,
+            login: user.login,
+            is_admin: user.is_admin,
         },
         "SECRET_KEY",
         {
@@ -264,6 +267,8 @@ app.post("/login", async (req, res) => {
     const token = jwt.sign(
         {
             id: user._id,
+            login: user.login,
+            is_admin: user.is_admin,
         },
         "SECRET_KEY",
         {
@@ -281,7 +286,7 @@ app.post("/login", async (req, res) => {
     });
 })
 
-app.get("/get_user", async (req, res) => {
+app.get("/get_user", middleware, async (req, res) => {
     const {login} = req.query;
     const user = await User.findOne({login});
     if (!user) {
@@ -289,7 +294,6 @@ app.get("/get_user", async (req, res) => {
         return res.status(400).json({
             message: "Пользователь с таким логином не найден."
         })
-
     }
     console.log(user);
     res.status(200).json({

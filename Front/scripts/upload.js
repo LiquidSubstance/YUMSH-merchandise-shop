@@ -27,6 +27,7 @@ form_description.addEventListener("change", () => {
     preview_description.textContent = form_description.value;
 })
 async function upload_item() {
+    await get_user();
     const form_date = document.getElementById("file-upload-date")
     const form_type = document.getElementById("file-upload-type");
     const button = document.getElementById("add-item-button");

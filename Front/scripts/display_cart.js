@@ -21,6 +21,7 @@ async function create_cart_element(id, quantity, cnt) {
     return cart_item;
 }
 async function load_cart(){
+    await get_user();
     const cart = document.querySelector(".cart-wrapper");
     const user = JSON.parse(localStorage.getItem("user"));
     const ans = await fetch("/get_user?login=" + user.login, {

@@ -1,4 +1,5 @@
 async function load_account_data(){
+    await get_user();
     const user = JSON.parse(localStorage.getItem("user"));
     const login_button = document.getElementById("open-login");
     const signup_button = document.getElementById("open-signup");

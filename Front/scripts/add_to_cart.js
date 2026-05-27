@@ -1,4 +1,5 @@
 async function add_to_cart() {
+    await get_user();
     const user = JSON.parse(localStorage.getItem("user"));
     console.log(user);
     const item_id = document.querySelector('.body').id
