@@ -208,7 +208,7 @@ app.post("/signup", async (req, res) => {
         })
     }
 
-    const password_hash = await bcrypt.hash(password, 533);
+    const password_hash = await bcrypt.hash(password, 10);
 
     const user = new User({
         login,
