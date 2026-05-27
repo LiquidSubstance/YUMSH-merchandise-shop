@@ -18,6 +18,7 @@ app.post("/upload_item_image", upload.single("file"), (req, res) => {
         res.json({ok: true});
     })
 });
+const admin = require("/admin_middleware")
 const sqlite3 = require('sqlite3').verbose();
 const database = new sqlite3.Database(path.join(__dirname, "../Data/database.db"));
 database.run(`
@@ -32,7 +33,7 @@ database.run(`
     )                   
 `);
 
-app.post("/upload_item", (req, res) => {
+app.post("/upload_item", admin,  (req, res) => {
     const {name, price, date, description, type, image_path} = req.body;
     const sql = `
         INSERT INTO items (name, price, date, description, type, image_path)
@@ -67,7 +68,7 @@ app.get("/get_item", (req, res) => {
    });
 });
 
-app.delete("/delete_item", (req, res) => {
+app.delete("/delete_item", admin,(req, res) => {
     const {id} = req.body;
     database.get(`SELECT * FROM items WHERE id = ?`, [id], (err, row) => {
         if (!row) {
@@ -88,7 +89,7 @@ app.delete("/delete_item", (req, res) => {
         }
     });
 })
-app.post("/add_attribute", (req, res) => {
+app.post("/add_attribute", admin, (req, res) => {
     const {id, attribute, content} = req.body;
     const sql = `
         ALTER TABLE items
@@ -116,7 +117,7 @@ app.post("/update_attribute", (req, res) => {
         }
     });
 })
-app.delete("/delete_attribute", (req, res) => {
+app.delete("/delete_attribute", admin,(req, res) => {
     const {id, attribute} = req.body;
     database.run(`UPDATE items SET ${attribute} = ? WHERE id = ?`, ["", id], (err) => {
         if (err) {
@@ -133,7 +134,7 @@ database.run(`
         content        TEXT
     )                   
 `);
-app.post("/add_filter", (req, res) => {
+app.post("/add_filter", admin, (req, res) => {
     const {attribute, name, content} = req.body;
     const sql = `
         INSERT INTO filters (attribute, name, content) 
@@ -150,7 +151,7 @@ app.post("/add_filter", (req, res) => {
         });
     });
 });
-app.delete("/delete_filter", (req, res) => {
+app.delete("/delete_filter", admin, (req, res) => {
     const {id} = req.body;
     database.run(`DELETE FROM filters WHERE id = ?`, [id], (err, rows) => {
         console.log(id)
@@ -307,7 +308,7 @@ app.get("/get_user", middleware, async (req, res) => {
     });
 })
 
-app.post("/make_admin", async (req, res) => {
+app.post("/make_admin", admin, async (req, res) => {
     const {login} = req.body;
     const user = await User.findOne({login});
     if (!user) {
@@ -322,7 +323,7 @@ app.post("/make_admin", async (req, res) => {
     });
 })
 
-app.post("/add_to_cart", async (req, res) => {
+app.post("/add_to_cart", middleware, async (req, res) => {
     const {login, id} = req.body;
     const user = await User.findOne({login});
     if (!user) {
@@ -341,7 +342,7 @@ app.post("/add_to_cart", async (req, res) => {
         message: "Товар с id " + id + " добавлен в корзину"
     });
 })
-app.post("/delete_from_cart", async (req, res) => {
+app.post("/delete_from_cart", middleware, async (req, res) => {
     const {login, id} = req.body;
     const user = await User.findOne({login});
     if (!user) {
@@ -365,7 +366,7 @@ app.post("/delete_from_cart", async (req, res) => {
         message: "Товар с id " + id + " удален из корзины"
     });
 })
-app.post("/remove_from_cart", async (req, res) => {
+app.post("/remove_from_cart", middleware, async (req, res) => {
     const {login, id} = req.body;
     const user = await User.findOne({login});
     if (!user) {
@@ -385,7 +386,7 @@ app.post("/remove_from_cart", async (req, res) => {
         message: "Товар с id " + id + " удален из корзины"
     });
 })
-app.post("/order", async (req, res) => {
+app.post("/order", middleware, async (req, res) => {
     const {login} = req.body;
     const user = await User.findOne({login});
     if (!user) {
